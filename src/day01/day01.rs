@@ -12,28 +12,22 @@ fn part1(input: &str) -> u32 {
 
     for line in input.lines() {
         let mut numbers: String = String::new();
-        for ch in line.chars() {
-            if ch.is_digit(10) {
-                numbers.push(ch);
-            }
-        }
-        
-        if numbers.len() > 2 {
-            let mut chars = numbers.chars();
-            let x = chars.next().unwrap();
-            let y = chars.next_back().unwrap();
-            numbers = x.to_string();
-            numbers.push(y);
-        }
-
-        if numbers.len() < 2 {
-            numbers.push(numbers.clone().chars().next().unwrap());
-        }
+        numbers.push(line.chars()
+            .find(|x| x.is_digit(10)).unwrap());
+        numbers.push(line.chars().rfind(|x| x.is_digit(10))
+            .unwrap_or(numbers
+                .chars()
+                .next()
+                .unwrap()));
 
         sum += numbers.parse::<u32>().unwrap();
     }
 
     sum
+}
+
+fn part2(input: &str) -> String {
+    todo!()
 }
 
 #[cfg(test)]
@@ -47,8 +41,8 @@ mod tests {
         assert_eq!(sum, 142);
     }
 
-    #[test]
-    fn test2() {
-        let sample: &str = "two1nine\neightwothree\nabcone2threexyz\nxtwone3four\n4nineeightseven2\nzoneight234\n7pqrstsixteen"
-    }
+    // #[test]
+    // fn test2() {
+    //     let sample: &str = "two1nine\neightwothree\nabcone2threexyz\nxtwone3four\n4nineeightseven2\nzoneight234\n7pqrstsixteen"
+    // }
 }
