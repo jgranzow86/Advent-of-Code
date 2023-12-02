@@ -1,14 +1,15 @@
-use regex::Regex;
-
 fn main() {
     let input = include_str!("input.txt");
 
-    let answer: u32 = part1(input);
-    println!("{answer}");
+    let answer: i32 = part1(input);
+    println!("Part 1: {answer}");
+
+    let answer: i32 = part2(input);
+    println!("Part 2: {answer}");
 }
 
-fn part1(input: &str) -> u32 {
-    let mut sum: u32 = 0;
+fn part1(input: &str) -> i32 {
+    let mut sum: i32 = 0;
 
     for line in input.lines() {
         let mut numbers: String = String::new();
@@ -22,30 +23,49 @@ fn part1(input: &str) -> u32 {
                 .next()
                 .unwrap()));
 
-        sum += numbers.parse::<u32>().unwrap();
+        sum += numbers.parse::<i32>().unwrap();
     }
 
     sum
 }
 
-// fn part2(input: &str) -> String {
-//     todo!()
-// }
+fn part2(input: &str) -> i32 {
+    let new_input = input.replace("one", "o1e")
+        .replace("two", "t2o" )
+        .replace("three", "t3e")
+        .replace("four", "4")
+        .replace("five", "5e")
+        .replace("six", "6")
+        .replace("seven", "7n")
+        .replace("eight", "e8t")
+        .replace("nine", "n9e");
+
+    part1(new_input.as_str())
+}
 
 #[cfg(test)]
 mod tests {
     use super::*;
     #[test]
     fn test_part_1() {
-        let sample: &str = "1abc2\npqr3stu8vwx\na1b2c3d4e5f\ntreb7uchet";
+        let sample: &str = "1abc2
+pqr3stu8vwx
+a1b2c3d4e5f
+treb7uchet";
 
-        let sum: u32 = part1(sample);
+        let sum: i32 = part1(sample);
         assert_eq!(sum, 142);
     }
     #[test]
     fn test_part_2() {
-        let sample: &str = "two1nine\neightwothree\nabcone2threexyz\nxtwone3four\n4nineeightseven2\nzoneight234\n7pqrstsixteen";
-        let sum = 12;
+        let sample: &str = "two1nine
+eightwothree
+abcone2threexyz
+xtwone3four
+4nineeightseven2
+zoneight234
+7pqrstsixteen";
+        let sum = part2(sample);
         assert_eq!(sum, 281)
     }
 }
