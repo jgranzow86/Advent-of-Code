@@ -1,10 +1,10 @@
 fn main() {
     let input = include_str!("input.txt");
 
-    let answer: i32 = part1(input);
+    let answer: i32 = part1(&input);
     println!("Part 1: {answer}");
 
-    let answer: i32 = part2(input);
+    let answer: i32 = part2(&input);
     println!("Part 2: {answer}");
 }
 
@@ -53,7 +53,7 @@ pqr3stu8vwx
 a1b2c3d4e5f
 treb7uchet";
 
-        let sum: i32 = part1(sample);
+        let sum: i32 = part1(&sample);
         assert_eq!(sum, 142);
     }
     #[test]
@@ -65,7 +65,7 @@ xtwone3four
 4nineeightseven2
 zoneight234
 7pqrstsixteen";
-        let sum = part2(sample);
+        let sum = part2(&sample);
         assert_eq!(sum, 281)
     }
 }
