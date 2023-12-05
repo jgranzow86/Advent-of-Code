@@ -1,10 +1,10 @@
-use nom::IResult;
-use nom::character::complete;
-use nom::character::complete::{space1, alpha1};
-use nom::bytes::complete::tag;
-use nom::sequence::tuple;
-use nom::branch::alt;
-use nom::Finish;
+use nom::{IResult,
+    character::complete,
+    character::complete::{space1, alpha1},
+    bytes::complete::tag,
+    sequence::tuple,
+    branch::alt,
+    Finish};
 
 fn main() {
     let input = include_str!("input.txt");
