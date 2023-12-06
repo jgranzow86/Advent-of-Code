@@ -8,27 +8,6 @@ fn main() {
 
     let part2_answer = part2(&input);
     println!("Part 2: {part2_answer}");
-
-    let ans = ways_to_win(15, -40);
-    println!("Stick: {ans}");
-}
-
-fn ways_to_win(time: i64, distance: i64) -> i64 {
-    // Thanks Stick
-    let a = -1;
-    let b = time;
-    let c = distance - 1;
-
-    let numerator_val = ((b.pow(2) - 4 * a * c) as f64).sqrt();
-    let divisor = 2.0 * a as f64;
-
-    let x0 = (-b as f64 + numerator_val) / divisor;
-    let x1 = (-b as f64 - numerator_val) / divisor;
-
-    // let ret = (x0.ceil() - x1.floor()).abs() + 1.0;
-    let ret = (x1.floor() - x0.ceil()) + 1.0;
-
-    ret as i64
 }
 
 fn part1(input: &String) -> u64 {
@@ -37,7 +16,7 @@ fn part1(input: &String) -> u64 {
     let mut answer = 1;
     
     for race in races {
-        answer = answer * race.possilbe_ways_to_win();
+        answer = answer * race.possilbe_wins();
     }
     answer
 }
@@ -60,7 +39,7 @@ fn part2(input: &String) -> u64 {
 
     let big_race = Race { time: time_str.parse().unwrap(), distance: distance_str.parse().unwrap() };
 
-    big_race.possilbe_ways_to_win()
+    big_race.possilbe_wins()
 }
 
 fn parse_input(input: &String) -> Vec<Race> {
@@ -101,7 +80,7 @@ struct Race {
 }
 
 impl Race {
-    fn possilbe_ways_to_win(&self) -> u64 {
+    fn possilbe_wins(&self) -> u64 {
         let mut won_races = 0;
 
         for button_held in 1..=self.time {
