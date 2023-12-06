@@ -7,37 +7,60 @@ fn main() {
     println!("Part 1: {part1_answer}");
 
     let part2_answer = part2(&input);
-    println!("Part 2: {part2_answer}")
+    println!("Part 2: {part2_answer}");
+
+    let ans = ways_to_win(15, -40);
+    println!("Stick: {ans}");
+}
+
+fn ways_to_win(time: i64, distance: i64) -> i64 {
+    // Thanks Stick
+    let a = -1;
+    let b = time;
+    let c = distance - 1;
+
+    let numerator_val = ((b.pow(2) - 4 * a * c) as f64).sqrt();
+    let divisor = 2.0 * a as f64;
+
+    let x0 = (-b as f64 + numerator_val) / divisor;
+    let x1 = (-b as f64 - numerator_val) / divisor;
+
+    // let ret = (x0.ceil() - x1.floor()).abs() + 1.0;
+    let ret = (x1.floor() - x0.ceil()) + 1.0;
+
+    ret as i64
 }
 
 fn part1(input: &String) -> u64 {
     let races = parse_input(&input);
 
     let mut answer = 1;
-    let mut win_counts = Vec::new();
     
     for race in races {
-        let mut won_races = 0;
-        for button_held in 0..=race.time {
-            let remaining_time = race.time - button_held;
-            let distance_traveled = button_held * remaining_time;
-            if distance_traveled > race.distance {
-                won_races += 1;
-            }
-        }
-        win_counts.push(won_races);
-    }
-    for each in win_counts {
-        answer = answer * each;
+        answer = answer * race.possilbe_ways_to_win();
     }
     answer
 }
 
 fn part2(input: &String) -> u64 {
-    let input2 = input.clone();
-    let answer = 0;
+    let races = parse_input(&input);
+    
 
-    answer
+    let mut time_str = String::new();
+    let mut distance_str = String::new();
+
+    for race in races {
+        time_str += &race
+            .time
+            .to_string()[..];
+        distance_str += &race
+            .distance
+            .to_string()[..];
+    }
+
+    let big_race = Race { time: time_str.parse().unwrap(), distance: distance_str.parse().unwrap() };
+
+    big_race.possilbe_ways_to_win()
 }
 
 fn parse_input(input: &String) -> Vec<Race> {
@@ -77,6 +100,21 @@ struct Race {
     distance: u64,
 }
 
+impl Race {
+    fn possilbe_ways_to_win(&self) -> u64 {
+        let mut won_races = 0;
+
+        for button_held in 1..=self.time {
+            let remaining_time = self.time - button_held;
+            let distance_traveled = button_held * remaining_time;
+            if distance_traveled > self.distance {
+                won_races += 1;
+            }
+        }
+        won_races
+    }
+}
+
 
 #[cfg(test)]
 mod tests {
@@ -95,7 +133,7 @@ mod tests {
         let input = String::from_str(include_str!("sample.txt")).unwrap();
 
         let answer = part2(&input);
-        assert_eq!(answer, 30);
+        assert_eq!(answer, 71503);
     }
 
     #[test]
