@@ -26,8 +26,7 @@ fn main() {
     let now = Instant::now();
     let part2_answer = part2(&input);
     let elapsed = now.elapsed();
-    println!("Performance Report:");
-    println!("({}us)Part 2: {}", elapsed.as_nanos(), part2_answer);
+    println!("({}μs)Part 2: {}", elapsed.as_nanos(), part2_answer);
 }
 
 fn part1(input: &str) -> u64 {
@@ -46,23 +45,20 @@ fn part1(input: &str) -> u64 {
             .find(|node| node.source == "AAA")
             .unwrap();
 
-    loop {
+    'outer: loop {
         for direction in directions.chars() {
-            if direction == 'L' {
-                current_node = nodes.iter().find(|node| current_node.left == node.source).unwrap();
-            } else if direction == 'R'{
-                current_node = nodes.iter().find(|node| current_node.right == node.source).unwrap();
-            } else {
-                todo!();
-            }
+            current_node = nodes.iter().find(|node| {
+                match direction {
+                    'L' => current_node.left == node.source,
+                    'R' => current_node.right == node.source,
+                    _ => panic!("This shouldn't happen!!!"),
+                }
+            }).unwrap();
 
             step_count += 1;
             if current_node.source == "ZZZ" {
-                break;
+                break 'outer;
             }
-        }
-        if current_node.source == "ZZZ" {
-            break;
         }
     }
     step_count
