@@ -1,6 +1,5 @@
 use std::{
     fs,
-    str::FromStr,
     time::Instant,
 };
 
@@ -10,13 +9,13 @@ fn main() {
 
     let data = parse_input(&input);
     let elapsed = now.elapsed();
-    println!("{}us to parse", elapsed.as_micros());
+    println!("{}μs to parse", elapsed.as_micros());
 
     part1(&data);
 
     part2(&data);
     let elapsed2 = now.elapsed();
-    println!("{}us Total", elapsed2.as_micros());
+    println!("{}μs Total", elapsed2.as_micros());
 }
 
 fn part1(data: &Vec<Vec<i64>>) -> i64{
