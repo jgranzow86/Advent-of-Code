@@ -1,9 +1,7 @@
-use core::panic;
 use std::{
     fs,
     time::Instant,
 };
-use prettytable::{Table, Row, Cell};
 
 
 #[macro_use] extern crate prettytable;
@@ -14,17 +12,16 @@ fn main() {
     let input = fs::read_to_string("input.txt")
         .expect("Error reading file");
     let data = parse_input(&input);
-    let expanded_data = expand(&data, 1);
-    let galaxies = find_galaxies(&expanded_data);
+    let expansions = find_expansions(&data);
+    let galaxies = find_galaxies(&data);
     let elapsed_parse = now.elapsed();
 
     let now_1 = Instant::now();
-    let answer_1 = part1(&galaxies);
+    let answer_1 = part1(&galaxies, &expansions, 1);
     let elapsed_1 = now_1.elapsed();
 
     let now_2 = Instant::now();
-    // let answer_2 = part2(&data);
-    let answer_2 = 0;
+    let answer_2 = part2(&galaxies, &expansions, 999_999);
     let elapsed_2 = now_2.elapsed();
 
     let elapsed_total = elapsed_parse + elapsed_1 + elapsed_2;
@@ -36,8 +33,10 @@ fn main() {
         ["Part 2", elapsed_2.as_micros(), answer_2]);
 }
 
-fn part1(galaxies: &Vec<Galaxy>) -> u64 {
+fn part1(galaxies: &Vec<Galaxy>, expansions: &(Vec<usize>, Vec<usize>), expansion_rate: i64) -> u64 {
     let mut answer = Vec::new();
+
+    let galaxies = expand(&galaxies, &expansions, expansion_rate);
 
     {
         let mut gal = 0;
@@ -54,8 +53,24 @@ fn part1(galaxies: &Vec<Galaxy>) -> u64 {
     answer.iter().sum()
 }
 
-fn part2(data: &Vec<Vec<char>>) -> i64 {
-    0
+fn part2(galaxies: &Vec<Galaxy>, expansions: &(Vec<usize>, Vec<usize>), expansion_rate: i64) -> u64 {
+    let mut answer = Vec::new();
+
+    let galaxies = expand(&galaxies, &expansions, expansion_rate);
+
+    {
+        let mut gal = 0;
+        while gal < galaxies.len() {
+            let mut galx = galaxies[gal].id as usize;
+            while galx < galaxies.len() {
+                answer.push(galaxies[gal]
+                    .calculate_neighbors_distance(&galaxies[galx]));
+                galx += 1;
+            }
+            gal += 1;
+        }
+    }
+    answer.iter().sum()
 }
 
 #[derive(PartialEq, Eq, Clone, Debug)]
@@ -82,8 +97,7 @@ fn parse_input(input: &str) -> Vec<Vec<Space>> {
     data
 }
 
-fn expand(data: &Vec<Vec<Space>>, count: u64) -> Vec<Vec<Space>> {
-    let mut expanded_data = data.clone();
+fn find_expansions(data: &Vec<Vec<Space>>) -> (Vec<usize>, Vec<usize>) {
     let mut columns_to_expand = Vec::new();
     let mut rows_to_expand = Vec::new();
 
@@ -121,32 +135,47 @@ fn expand(data: &Vec<Vec<Space>>, count: u64) -> Vec<Vec<Space>> {
         }
     }
 
-    rows_to_expand.reverse();
-    for each in rows_to_expand {
-        expanded_data.insert(each, vec![Space::Nothing; data[0].len()]);
-    }
+    (rows_to_expand, columns_to_expand)
+}
 
+fn expand(galaxies: &Vec<Galaxy>, expansions: &(Vec<usize>, Vec<usize>), expansion_rate: i64) -> Vec<Galaxy> {
+    let mut galaxies = galaxies.clone();
+    let mut rows_to_expand = expansions.0.clone();
+    rows_to_expand.reverse();
+    let mut columns_to_expand = expansions.1.clone();
     columns_to_expand.reverse();
-    for each in columns_to_expand {
-        let mut y = 0;
-        while y < expanded_data.len() {
-            expanded_data[y].insert(each, Space::Nothing);
-            y += 1;
+
+    for col in columns_to_expand {
+        let mut idx = 0;
+        while idx < galaxies.len() {
+            if galaxies[idx].x > col as i64 {
+                galaxies[idx].x += expansion_rate;
+            }
+            idx += 1;
         }
     }
 
-    expanded_data
+    for row in rows_to_expand {
+        let mut idx = 0;
+        while idx < galaxies.len() {
+            if galaxies[idx].y > row as i64 {
+                galaxies[idx].y += expansion_rate;
+            }
+            idx += 1;
+        }
+    }
+    galaxies
 }
 
-fn find_galaxies(expanded_data: &Vec<Vec<Space>>) -> Vec<Galaxy> {
+fn find_galaxies(data: &Vec<Vec<Space>>) -> Vec<Galaxy> {
     let mut galaxies = Vec::new();
     {
         let mut id = 1;
         let mut y = 0;
-        while y < expanded_data.len() {
+        while y < data.len() {
             let mut x = 0;
-            while x < expanded_data[y].len() {
-                if expanded_data[y][x] == Space::Gal { 
+            while x < data[y].len() {
+                if data[y][x] == Space::Gal { 
                     galaxies.push(Galaxy { id, x: x as i64, y: y as i64 });
                     id += 1;
                 }
@@ -191,9 +220,9 @@ mod tests {
 #...#.....";
         
         let data = parse_input(&input);
-        let expanded_data = expand(&data, 1);
-        let galaxies = find_galaxies(&expanded_data);
-        let answer = part1(&galaxies);
+        let expansions = find_expansions(&data);
+        let galaxies = find_galaxies(&data);
+        let answer = part1(&galaxies, &expansions, 1);
         assert_eq!(answer, 374);
     }
 
@@ -211,42 +240,22 @@ mod tests {
 #...#.....";
         
         let data = parse_input(&input);
-        let expanded_data = expand(&data, 1);
-        let galaxies = find_galaxies(&expanded_data);
-        let answer = part1(&galaxies);
+        let galaxies = find_galaxies(&data);
+        let expansions = find_expansions(&data);
+        let answer = part2(&galaxies, &expansions, 9);
+        assert_eq!(answer, 1030);
+        let answer = part2(&galaxies, &expansions, 99);
         assert_eq!(answer, 8410);
     }
 
     #[test]
-    fn test_expansion() {
-        let input = "...#......
-.......#..
-#.........
-..........
-......#...
-.#........
-.........#
-..........
-.......#..
-#...#.....";
-
-        let expexcted_input = "....#........
-.........#...
-#............
-.............
-.............
-........#....
-.#...........
-............#
-.............
-.............
-.........#...
-#....#.......";
-
-        let data = parse_input(&input);
-        let expected_data = parse_input(&expexcted_input);
-        let expanded_data = expand(&data, 1);
-
-        assert_eq!(expected_data, expanded_data);
+    fn test_bed() {
+        let start = Instant::now();
+        for _ in 0..=1_000_000 {
+            
+        }
+        let elapsed = start.elapsed();
+        println!("Run time: {}µs", elapsed.as_micros());
+        assert!(elapsed.as_micros() < 10_000);
     }
 }
