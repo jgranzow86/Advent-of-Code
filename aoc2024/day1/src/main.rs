@@ -10,7 +10,6 @@ use nom::{
     sequence::tuple,
     character::complete::{space1, digit1}
 };
-use std::collections::HashMap;
 
 #[macro_use] extern crate prettytable;
 
@@ -39,7 +38,7 @@ fn main() {
 fn part1(input: &str) -> usize {
     let (list1, list2) = parse_list(&input);
 
-    let mut distance = Vec::with_capacity(1000);
+    let mut distance = Vec::with_capacity(list1.len());
 
     for each in 0..list1.len() {
         let diff = list1[each] as isize - list2[each] as isize;
@@ -60,8 +59,9 @@ fn part2(input: &str) -> usize {
 }
 
 fn parse_list(input: &str) -> (Vec<usize>, Vec<usize>) {
-    let mut list1: Vec<usize> = Vec::with_capacity(1000);
-    let mut list2: Vec<usize> = Vec::with_capacity(1000);
+    let line_count = input.lines().count();
+    let mut list1: Vec<usize> = Vec::with_capacity(line_count);
+    let mut list2: Vec<usize> = Vec::with_capacity(line_count);
     for line in input.lines() {
         let (_, (num1, num2)) = parse_numbers(line).finish().unwrap();
         list1.push(num1);
