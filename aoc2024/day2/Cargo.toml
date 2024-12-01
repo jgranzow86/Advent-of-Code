@@ -1,0 +1,3 @@
+[package]
+name = "day2"
+version.workspace = true
