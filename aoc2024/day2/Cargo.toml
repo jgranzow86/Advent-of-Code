@@ -1,3 +1,8 @@
 [package]
 name = "day2"
 version.workspace = true
+
+[dependencies]
+humantime.workspace = true
+nom.workspace = true
+prettytable.workspace = true

@@ -16,3 +16,5 @@ Cargo.lock
 # vscode files
 .vscode
 .DS_Store
+example.txt
+input.txt
