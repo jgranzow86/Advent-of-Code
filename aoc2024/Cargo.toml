@@ -1,5 +1,5 @@
 [workspace]
-members = ["day1", "day2", "day3"]
+members = ["day1", "day2", "day3", "day4", "day5", "day6", "day9"]
 package.version = "0.1.0"
 
 [workspace.dependencies]
