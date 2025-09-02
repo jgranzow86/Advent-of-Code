@@ -31,10 +31,16 @@ fn main() {
     );
 }
 
-fn part1(input: &str) -> usize {
+fn part1(input: &str) -> isize {
     1
 }
 
-fn part2(input: &str) -> usize {
+fn part2(input: &str) -> isize {
     2
+}
+
+#[test]
+fn test_part1() {
+    let answer: isize = 0;
+    assert_eq!(answer, 0);
 }
