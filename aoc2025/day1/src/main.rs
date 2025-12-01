@@ -1,4 +1,4 @@
-use std::{fs, time::Instant};
+use std::{fmt, fs, time::Instant};
 
 extern crate humantime;
 use humantime::format_duration;
@@ -31,6 +31,31 @@ fn main() {
 	);
 }
 
+#[derive(PartialEq)]
+enum Direction {
+	Left,
+	Right,
+}
+
+impl fmt::Display for Direction {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		match self {
+			Direction::Left => write!(f, "Left"),
+			Direction::Right => write!(f, "Right"),
+		}
+	}
+}
+
+impl Direction {
+	fn from_str(s: &str) -> Result<Self, &str> {
+		match s.to_lowercase().as_str() {
+			"left" | "l" => Ok(Direction::Left),
+			"right" | "r" => Ok(Direction::Right),
+			_ => Err("Unknown Direction"),
+		}
+	}
+}
+
 struct Dial {
 	position: isize,
 	total_zeros: isize,
@@ -61,13 +86,14 @@ impl Dial {
 
 	fn parse_direction(&mut self, spin: &str) {
 		let mut c = spin.chars();
-		if c.next().unwrap() == 'L' {
+
+		let direction = Direction::from_str(&c.next().unwrap().to_string()).unwrap();
+
+		if direction == Direction::Left {
 			let rot = c.as_str().parse::<isize>().unwrap();
-			// println!("Moving LEFT, {} times", rot);
 			self.left(rot);
 		} else {
 			let rot = c.as_str().parse::<isize>().unwrap();
-			// println!("Moving RIGHT, {} times", rot);
 			self.right(rot);
 		}
 	}
@@ -96,7 +122,6 @@ fn part2(input: &str) -> isize {
 		total_zeros: 0,
 	};
 	for line in input.lines() {
-		// println!("Line: {}", line);
 		lock.parse_direction(line);
 	}
 
