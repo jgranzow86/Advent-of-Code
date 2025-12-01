@@ -1,0 +1,134 @@
+[
+    {
+        "label": "Build & Debug - Day1",
+        "adapter": "CodeLLDB",
+        "build": {
+            "command": "~/.cargo/bin/cargo",
+            "args": ["build", "--bin day1"]
+        },
+        "sourceLanguages": ["rust"],
+        "request": "launch",
+        "program": "$ZED_WORKTREE_ROOT/target/debug/day1"
+    },
+    {
+        "label": "Build & Debug - Day2",
+        "adapter": "CodeLLDB",
+        "build": {
+            "command": "~/.cargo/bin/cargo",
+            "args": ["build", "--bin day2"]
+        },
+        "sourceLanguages": ["rust"],
+        "request": "launch",
+        "program": "$ZED_WORKTREE_ROOT/target/debug/day2"
+    },
+    {
+        "label": "Build & Debug - Day3",
+        "adapter": "CodeLLDB",
+        "build": {
+            "command": "~/.cargo/bin/cargo",
+            "args": ["build", "--bin day3"]
+        },
+        "sourceLanguages": ["rust"],
+        "request": "launch",
+        "program": "$ZED_WORKTREE_ROOT/target/debug/day3"
+    },
+    {
+        "label": "Build & Debug - Day4",
+        "adapter": "CodeLLDB",
+        "build": {
+            "command": "~/.cargo/bin/cargo",
+            "args": ["build", "--bin day4"]
+        },
+        "sourceLanguages": ["rust"],
+        "request": "launch",
+        "program": "$ZED_WORKTREE_ROOT/target/debug/day4"
+    },
+    {
+        "label": "Build & Debug - Day5",
+        "adapter": "CodeLLDB",
+        "build": {
+            "command": "~/.cargo/bin/cargo",
+            "args": ["build", "--bin day5"]
+        },
+        "sourceLanguages": ["rust"],
+        "request": "launch",
+        "program": "$ZED_WORKTREE_ROOT/target/debug/day5"
+    },
+    {
+        "label": "Build & Debug - Day6",
+        "adapter": "CodeLLDB",
+        "build": {
+            "command": "~/.cargo/bin/cargo",
+            "args": ["build", "--bin day6"]
+        },
+        "sourceLanguages": ["rust"],
+        "request": "launch",
+        "program": "$ZED_WORKTREE_ROOT/target/debug/day6"
+    },
+    {
+        "label": "Build & Debug - Day7",
+        "adapter": "CodeLLDB",
+        "build": {
+            "command": "~/.cargo/bin/cargo",
+            "args": ["build", "--bin day7"]
+        },
+        "sourceLanguages": ["rust"],
+        "request": "launch",
+        "program": "$ZED_WORKTREE_ROOT/target/debug/day7"
+    },
+    {
+        "label": "Build & Debug - Day8",
+        "adapter": "CodeLLDB",
+        "build": {
+            "command": "~/.cargo/bin/cargo",
+            "args": ["build", "--bin day8"]
+        },
+        "sourceLanguages": ["rust"],
+        "request": "launch",
+        "program": "$ZED_WORKTREE_ROOT/target/debug/day8"
+    },
+    {
+        "label": "Build & Debug - Day9",
+        "adapter": "CodeLLDB",
+        "build": {
+            "command": "~/.cargo/bin/cargo",
+            "args": ["build", "--bin day9"]
+        },
+        "sourceLanguages": ["rust"],
+        "request": "launch",
+        "program": "$ZED_WORKTREE_ROOT/target/debug/day9"
+    },
+    {
+        "label": "Build & Debug - Day10",
+        "adapter": "CodeLLDB",
+        "build": {
+            "command": "~/.cargo/bin/cargo",
+            "args": ["build", "--bin day10"]
+        },
+        "sourceLanguages": ["rust"],
+        "request": "launch",
+        "program": "$ZED_WORKTREE_ROOT/target/debug/day10"
+    },
+    {
+        "label": "Build & Debug - Day11",
+        "adapter": "CodeLLDB",
+        "build": {
+            "command": "~/.cargo/bin/cargo",
+            "args": ["build", "--bin day11"]
+        },
+        "sourceLanguages": ["rust"],
+        "request": "launch",
+        "program": "$ZED_WORKTREE_ROOT/target/debug/day11"
+    },
+    {
+        "label": "Build & Debug - Day12",
+        "adapter": "CodeLLDB",
+        "build": {
+            "command": "~/.cargo/bin/cargo",
+            "args": ["build", "--bin day12"]
+        },
+        "sourceLanguages": ["rust"],
+        "request": "launch",
+        "program": "$ZED_WORKTREE_ROOT/target/debug/day12"
+    }
+]

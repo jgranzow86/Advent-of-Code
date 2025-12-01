@@ -1,8 +1,0 @@
-[package]
-name = "day24"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]
-humantime.workspace = true
-prettytable.workspace = true

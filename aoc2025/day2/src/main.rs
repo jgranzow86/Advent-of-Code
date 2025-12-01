@@ -32,9 +32,22 @@ fn main() {
 }
 
 fn part1(input: &str) -> usize {
+    let _ = input;
     1
 }
 
 fn part2(input: &str) -> usize {
+    let _ = input;
     2
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test_part1() {
+        let answer: isize = 0;
+        assert_eq!(answer, 0);
+    }
 }
