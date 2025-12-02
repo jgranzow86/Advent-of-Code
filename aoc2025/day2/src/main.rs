@@ -116,7 +116,6 @@ fn part2(input: &str) -> isize {
 	for ids in id_ranges {
 		for id in ids.lower..=ids.upper {
 			let id_string = id.to_string();
-			let half_mark = id_string.len() / 2;
 
 			for each in get_factors(id_string.len()) {
 				let slice = id_string.chars().collect::<Vec<char>>();
