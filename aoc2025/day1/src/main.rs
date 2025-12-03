@@ -8,7 +8,6 @@ extern crate prettytable;
 
 fn main() {
 	let input = fs::read_to_string("day1/input.txt").expect("Error reading file");
-	// let input = fs::read_to_string("day1/example.txt").expect("Error reading file");
 
 	let now_part1 = Instant::now();
 	let answer_part1 = part1(&input);
