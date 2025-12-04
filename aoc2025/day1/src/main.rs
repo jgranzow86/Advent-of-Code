@@ -115,7 +115,6 @@ fn part1(input: &str) -> isize {
 }
 
 fn part2(input: &str) -> isize {
-	let mut zero_count = 0;
 	let mut lock = Dial {
 		position: 50,
 		total_zeros: 0,

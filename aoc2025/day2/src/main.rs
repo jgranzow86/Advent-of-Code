@@ -47,12 +47,6 @@ impl IDRange {
 			upper: range[1],
 		}
 	}
-
-	fn get_values(&self) -> Vec<String> {
-		let i_values = self.lower..=self.upper;
-		let s_values = i_values.map(|i| i.to_string()).collect::<Vec<String>>();
-		s_values
-	}
 }
 
 fn part1(input: &str) -> isize {
@@ -91,7 +85,6 @@ fn all_elements_equal(vector: Vec<String>) -> bool {
 
 fn get_factors(number: usize) -> Vec<usize> {
 	let mut factors: Vec<usize> = Vec::new();
-	let limit = number / 2;
 
 	for i in 1..number {
 		let rem = number % i;
